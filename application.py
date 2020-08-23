@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request
-# from elasticsearch import Elasticsearch
-# from elasticsearch.connection import create_ssl_context
+from elasticsearch import Elasticsearch
+from elasticsearch.connection import create_ssl_context
 
 # from datetime import datetime
 # from bson.json_util import dumps
 # from json import loads
-# import ssl
+import ssl
 
 app = Flask(__name__)
 
