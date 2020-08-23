@@ -1,25 +1,25 @@
 from flask import Flask, jsonify, request
-from elasticsearch import Elasticsearch
-from elasticsearch.connection import create_ssl_context
+# from elasticsearch import Elasticsearch
+# from elasticsearch.connection import create_ssl_context
 
 # from datetime import datetime
 # from bson.json_util import dumps
 # from json import loads
-import ssl
+# import ssl
 
 app = Flask(__name__)
 
-context = create_ssl_context()
-context.check_hostname = False
-context.verify_mode = ssl.CERT_NONE
+# context = create_ssl_context()
+# context.check_hostname = False
+# context.verify_mode = ssl.CERT_NONE
 
-es = Elasticsearch(
-    ['tux-es1.cci.drexel.edu','tux-es2.cci.drexel.edu','tux-es3.cci.drexel.edu'],
-    http_auth=('faf42', 'ohs4aeceeziz'),
-    scheme="https",
-    port=9200,
-    ssl_context = context,
-)
+# es = Elasticsearch(
+#     ['tux-es1.cci.drexel.edu','tux-es2.cci.drexel.edu','tux-es3.cci.drexel.edu'],
+#     http_auth=('faf42', 'ohs4aeceeziz'),
+#     scheme="https",
+#     port=9200,
+#     ssl_context = context,
+# )
 
 @app.route("/")
 def hello():
