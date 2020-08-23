@@ -45,5 +45,15 @@ def search():
         print("%(year)s: %(original_title)s" % hit["_source"])
     return res
 
+@app.route('/test/', methods=['GET'])
+def test():
+    return {}
+
+@app.route('/searching/', methods=['GET'])
+def searching():
+    res = es.search(index="faf42_info624_201904_movies")
+
+    return res
+
 if __name__ == '__main__':
     app.run(debug=True)
