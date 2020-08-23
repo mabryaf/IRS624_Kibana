@@ -25,25 +25,25 @@ es = Elasticsearch(
 def hello():
     return "Hello World!"
 
-# @app.route('/search/', methods=['GET'])
-# def search():
-#     title = request.args.get('title', '')
-#     query = {
-#     "from" : 0, "size" : 10,
-#     "query": {
-#         "multi_match" : {
-#         "query": title,
-#         "fields": ["original_title"]
-#         }
-#     }
-#     }
+@app.route('/search/', methods=['GET'])
+def search():
+    title = request.args.get('title', '')
+    query = {
+    "from" : 0, "size" : 10,
+    "query": {
+        "multi_match" : {
+        "query": title,
+        "fields": ["original_title"]
+        }
+    }
+    }
 
-#     res = es.search(index="faf42_info624_201904_movies",body=query)
+    res = es.search(index="faf42_info624_201904_movies",body=query)
 
-#     print("Got %d Hits:" % res['hits']['total']['value'])
-#     for hit in res['hits']['hits']:
-#         print("%(year)s: %(original_title)s" % hit["_source"])
-#     return res
+    print("Got %d Hits:" % res['hits']['total']['value'])
+    for hit in res['hits']['hits']:
+        print("%(year)s: %(original_title)s" % hit["_source"])
+    return res
 
 if __name__ == '__main__':
     app.run(debug=True)
