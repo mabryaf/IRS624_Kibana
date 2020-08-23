@@ -6,6 +6,9 @@ from elasticsearch.connection import create_ssl_context
 # from bson.json_util import dumps
 # from json import loads
 import ssl
+import urllib3
+
+urllib3.disable_warnings()
 
 app = Flask(__name__)
 
