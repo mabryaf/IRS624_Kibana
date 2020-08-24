@@ -2,16 +2,17 @@ from flask import Flask, jsonify, request
 from elasticsearch import Elasticsearch
 from elasticsearch.connection import create_ssl_context
 
-# from datetime import datetime
-# from bson.json_util import dumps
-# from json import loads
+from datetime import datetime
+from bson.json_util import dumps
+from json import loads
 import ssl
 import urllib3
 import certifi
 
-# urllib3.disable_warnings()
-
 app = Flask(__name__)
+
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config['JSON_SORT_KEYS'] = False
 
 @app.route("/")
 def hello():
@@ -19,10 +20,6 @@ def hello():
 
 @app.route('/search/', methods=['GET'])
 def search():
-
-    # http = urllib3.PoolManager(
-    # cert_reqs='CERT_REQUIRED',
-    # ca_certs=certifi.where())
      
     context = create_ssl_context()
     context.check_hostname = False
@@ -50,7 +47,7 @@ def search():
     "query": {
         "multi_match" : {
         "query": title,
-        "fields": ["original_title"]
+        "fields": ["original_title", 'description']
         }
     }
     }
