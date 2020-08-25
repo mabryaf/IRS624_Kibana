@@ -31,57 +31,64 @@ def hello():
 @app.route('/search/', methods=['GET'])
 def search():
     text = request.args.get('text', '')
+    yeargte = request.args.get('yeargte', '')
+    yearlte = request.args.get('yearlte', 2020)
+    avg_vote = request.args.get('avg_vote', '')
     genre = request.args.get('genre', '')
     country = request.args.get('country', '')
     language = request.args.get('language', '')
-    yeargte = request.args.get('yeargte', '')
-    yearlte = request.args.get('yearlte', 2020)
-    durationgte = request.args.get('durationgte', '')
-    durationlte = request.args.get('durationlte', 1000)
-    avg_vote = request.args.get('avg_vote', '')
+
 
     query = {
-    "from" : 0, "size" : 10,
+    "from" : 0, "size" : 30,
     "query": {
         "bool": {
-            "must": [],
-            "filter": []
+            "should": [],
+            "filter": [{
+                "bool": {
+                    "must": []
+                }
+            }
+            ]
             }
         }
     }
 
     if text:
-        text = {
-          "multi_match": {
-            "query": text,
-            "fields": ["original_title", "genre", "country", "language", "director", "writer","production_company", "description"]
-          }
-        }
-        query["query"]["bool"]["must"].append(text)
-    if genre:
-        genre = { "match": { "genre": genre}}
-        query["query"]["bool"]["must"].append(genre)
-    if country:
-        country = {"match": {"country": country}}
-        query["query"]["bool"]["must"].append(country)
-    if language:
-        language = {"match": {"language": language}}
-        query["query"]["bool"]["must"].append(language)
+        text = [
+              { "match": { "original_title": {"query": text, "boost": 4 }}},
+              { "match": { "director": {"query": text, "boost": 3 }}},
+              { "match": { "actors": {"query": text, "boost": 3 }}},
+              { "match": { "genre": {"query": text, "boost": 2 }}},
+              { "match": { "country": {"query": text, "boost": 1 }}},
+              { "match": { "language": {"query": text, "boost": 1 }}},
+              { "match": { "writer": {"query": text, "boost": 1 }}},
+              { "match": { "production_company": {"query": text, "boost": 1 }}},
+              { "match": { "description": {"query": text, "boost": 1 }}}
+              ]
+        query["query"]["bool"]["should"].extend(text)
     if yeargte:
         year = {"range": { "year": { "gte": yeargte, "lte": yearlte}}}
         query["query"]["bool"]["filter"].append(year)
-    if durationgte:
-        duration = {"range": { "duration": { "gte": durationgte, "lte": durationlte}}}
-        query["query"]["bool"]["filter"].append(duration)
     if avg_vote:
         avg_vote = {"range": { "avg_vote": { "gte": avg_vote }}}
         query["query"]["bool"]["filter"].append(avg_vote)
+    if genre:
+        genre = {"match": {"genre": {"query": genre}}}
+        query["query"]["bool"]["filter"][0]["bool"]["must"].append(genre)
+    if country:
+        country = {"match": {"country": {"query": country}}}
+        query["query"]["bool"]["filter"][0]["bool"]["must"].append(country)
+    if language:
+        language = {"match": {"language": {"query": language}}}
+        query["query"]["bool"]["filter"][0]["bool"]["must"].append(language)
 
-    res = es.search(index="faf42_test4",body=query)
+    res = es.search(index="",body=query)
 
-    print("Got %d Hits:" % res['hits']['total']['value'])
+    print("%d Entries:" % res['hits']['total']['value'])
     for hit in res['hits']['hits']:
-        print("%(year)s: %(original_title)s" % hit["_source"])
+        print(hit["_score"])
+        print("%(avg_vote)s: %(original_title)s (%(year)s)" % hit["_source"])
     return res
 
 if __name__ == '__main__':
