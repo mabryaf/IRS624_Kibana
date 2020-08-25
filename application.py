@@ -39,6 +39,7 @@ def search():
     language = request.args.get('language', '')
 
 
+
     query = {
     "from" : 0, "size" : 30,
     "query": {
@@ -83,12 +84,16 @@ def search():
         language = {"match": {"language": {"query": language}}}
         query["query"]["bool"]["filter"][0]["bool"]["must"].append(language)
 
+    print(query)
     res = es.search(index="",body=query)
 
-    print("%d Entries:" % res['hits']['total']['value'])
-    for hit in res['hits']['hits']:
-        print(hit["_score"])
-        print("%(avg_vote)s: %(original_title)s (%(year)s)" % hit["_source"])
+    try:
+        print("%d Entries:" % res['hits']['total']['value'])
+        for hit in res['hits']['hits']:
+            print(hit["_score"])
+            print("%(avg_vote)s: %(original_title)s (%(year)s)" % hit["_source"])
+    except:
+        res = es.search(index="faf42_movies1",body=query)
     return res
 
 if __name__ == '__main__':
