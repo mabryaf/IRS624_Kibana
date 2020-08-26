@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <section class="signup-section" id="lookup">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto text-center">
+                    <i class="fas fa-film fa-2x mb-2 text-white"></i>
+                    <h2 class="text-white mb-5">IMDB Search</h2>
+                    <form class="form-inline d-flex" method="POST" action="../results/">
+                        <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="text"name="text" placeholder="Enter movie keyword" />
+                        
+                        <button class="btn btn-primary mx-auto" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+
+

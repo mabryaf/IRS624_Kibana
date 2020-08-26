@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="page-wrapper bg-img-1 p-t-200 p-b-120">
+        <div class="wrapper wrapper--w900">
+            <a class="btn btn-primary btn-lg" href="../" role="button">Back to Search</a>
+            <div class="card card-4">
+                <div class="card-body">
+                    <ul class="tab-list">
+                        <li class="tab-list__item active">
+                            <a class="tab-list__link" href="#tab1" data-toggle="tab">"keyword" Exact Matches</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">                         
+                            <table id="table_exact" class="table table-bordered" style="width:100%; background-color: white">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Ratings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for data in q_exact['hits'] %}
+                                    <tr>
+                                        <td>{{data["_source"]["original_title"]}}</td>
+                                        <td>{{data["_source"]["avg_vote"]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            <div class="card card-4">
+                <div class="card-body">
+                    <ul class="tab-list">
+                        <li class="tab-list__item active">
+                            <a class="tab-list__link" href="#tab1" data-toggle="tab">Recommended by Description</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <table id="table_by_desc" class="table table-bordered" style="width:100%; background-color: white">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Ratings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>title_name</td>
+                                        <td>rating_num</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            <div class="card card-4">
+                <div class="card-body">
+                    <ul class="tab-list">
+                        <li class="tab-list__item active">
+                            <a class="tab-list__link" href="#tab1" data-toggle="tab">Recommended by Genre</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <table id="table_by_genre" class="table table-bordered" style="width:100%; background-color: white">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Ratings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>title_name</td>
+                                        <td>rating_num</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            <div class="card card-4">
+                <div class="card-body">
+                    <ul class="tab-list">
+                        <li class="tab-list__item active">
+                            <a class="tab-list__link" href="#tab1" data-toggle="tab">Recommended by Producer/Writer</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <table id="table_by_writer" class="table table-bordered" style="width:100%; background-color: white">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Ratings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>title_name</td>
+                                        <td>rating_num</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+        </div>
+    </div>
+{% endblock %}
+  
