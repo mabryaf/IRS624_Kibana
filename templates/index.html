@@ -8,15 +8,91 @@
                     <i class="fas fa-film fa-2x mb-2 text-white"></i>
                     <h2 class="text-white mb-5">IMDB Search</h2>
                     <form class="form-inline d-flex" method="POST" action="../results/">
-                        <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="text"name="text" placeholder="Enter movie keyword" />
-                        
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#searchModal">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                        <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="text"name="text" placeholder="Movie Title, People, Genre" /> 
                         <button class="btn btn-primary mx-auto" type="submit">Search</button>
+                        <div class="modal fade bd-example-modal-lg" id="searchModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                      <h4 class="modal-title text-left">Filter by</h4>
+                                      <button type="button" class="close" data-dismiss="modal">×</button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="form-inline">
+                                                <label class="form-group mb-3 lead">Rating
+                                                    <p class="form-group m-1 d-inline-block">
+                                                        <i class="fas fa-star text-primary"></i>
+                                                        <strong><label class="form-group m-1 d-inline-block" id="demo">x</label></strong>/10
+                                                    </p>
+                                                </label> 
+                                                <div class="slidecontainer flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0">
+                                                    <input type="range" min="1" max="10" value="1" class="slider flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="myRange" name='rating'>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="form-inline">
+                                                <label class="form-group mb-3 lead">Release Year</label>
+                                                <div class="flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0">
+                                                    <label class="form-group m-1 d-inline-block">From</label>
+                                                    <input  class="form-control m-1 d-inline-block" type="number" name="yeargte" min="1902" max="2020"/> 
+                                                    <label class="form-group m-1 d-inline-block">To</label>
+                                                    <input  class="form-control m-1 d-inline-block" type="number" name="yearlte" min="1902" max="2020"/> 
+                                                </div>
+                                            </div>
+
+                                            <div class="form-inline">
+                                                <label class="form-group mb-3 lead">Genres</label>
+                                                <select name='gens' multiple="multiple" class="bootstrap-select selectpicker form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" data-style="bg-white rounded-pill px-4 py-3 shadow-sm ">
+                                                    {% for gen in genres %}
+                                                    <option value="{{gen}}">{{gen}}</option>
+                                                    {% endfor %}
+                                                    
+                                                    
+                                                </select>
+                                            </div><br/>
+                                            <div class="form-inline">
+                                                <label class="form-group mb-3 lead">Countries</label>
+                                                <select name='count' multiple="multiple" class="bootstrap-select selectpicker form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" data-style="bg-white rounded-pill px-4 py-3 shadow-sm " >
+                                                    {%  for con in countries %}
+                                                    <option value="{{con}}">{{con}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><br/>
+                                            <div class="form-inline">
+                                                <label class="form-group mb-3 lead">Languages</label>
+                                                <select name='lange' multiple="multiple" class="bootstrap-select selectpicker form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" data-style="bg-white rounded-pill px-4 py-3 shadow-sm " >
+                                                    {%  for lang in langs %}
+                                                    <option value="{{lang}}">{{lang}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-sm btn-primary " data-dismiss="modal">Add filter</button>
+                                    </div>
+                                    
+                                  </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-
+{%block results %}
+{% endblock %}
 {% endblock %}
 
 
