@@ -36,46 +36,49 @@ def home():
 
 @app.route("/results/", methods=['POST'])
 def result():
-    input_genre = ['Drama', 'Western', 'Comedy', 'Horror', 'Mystery', 'Fantasy', 'Adventure', 'Romance', 'Sci-Fi', 'Crime', 'Musical', 'Thriller', 'Music', 'Biography', 'Action', 'History', 'War', 'Family', 'Animation', 'Sport']
-    input_country= ['USA', 'Italy', 'Germany', 'Denmark', 'France', 'Belgium', 'Hungary', 'Russia', 'Mexico', 'Sweden', 'Australia', 'Japan', 'UK', 'Austria', 'Spain', 'Czechoslovakia', 'India', 'Brazil', 'Portugal', 'Turkey', 'Netherlands', 'Finland', 'Norway', 'Poland', 'Switzerland', 'Argentina', 'Romania', 'Canada', 'China', 'Yugoslavia', 'Greece', 'Egypt', 'Israel', 'Ireland', 'Philippines', 'Cuba', 'Bulgaria', 'Lebanon', 'Bolivia', 'Chile', 'Iran', 'Croatia', 'Peru', 'Taiwan', 'Senegal', 'Syria', 'Jamaica', 'Algeria', 'Ethiopia', 'Venezuela', 'Mali', 'Indonesia', 'Vietnam', 'Iceland', 'Colombia', 'Tunisia', 'Gibraltar', 'Albania', 'Latvia', 'Ukraine', 'Kazakhstan', 'Estonia', 'Slovakia', 'Bangladesh', 'Georgia', 'Singapore', 'Slovenia', 'Thailand', 'Kuwait', 'Lithuania', 'Ecuador', 'Liechtenstein', 'Pakistan', 'Serbia', 'Uruguay', 'Moldova', 'Malta', 'Nepal', 'Malaysia', 'Armenia', 'Luxembourg', 'Bhutan', 'Iraq', 'Bahamas', 'Jordan', 'Morocco', 'Kosovo', 'Azerbaijan', 'Greenland', 'Palestine', 'Honduras', 'Uganda', 'Guatemala', 'Cyprus', 'Korea', 'Nigeria', 'Mongolia', 'Kyrgyzstan', 'Brunei', 'Panama', 'Yemen', 'Myanmar', 'Paraguay', 'Cambodia', 'Montenegro']
-    input_lang = ['English', 'Italian', 'German', 'Danish', 'French', 'Hungarian', 'Russian', 'Spanish', 'Swedish', 'None', 'Japanese', 'Czech', 'Portuguese', 'Ukrainian', 'Turkish', 'Yiddish', 'Dutch', 'Finnish', 'Norwegian', 'Polish', 'Romanian', 'Hindi', 'Slovenian', 'Mandarin', 'Arabic', 'Serbo-Croatian', 'Bengali', 'Albanian', 'Greek', 'Croatian', 'Urdu', 'Hebrew', 'Sinhalese', 'Esperanto', 'Korean', 'Persian', 'Slovak', 'Estonian', 'Bulgarian', 'Georgian', 'Cantonese', 'Latin', 'Kannada', 'Armenian', 'Bambara', 'Indonesian', 'Vietnamese', 'Irish', 'Malayalam', 'Icelandic', 'Serbian', 'Tamil', 'Saami', 'Bosnian', 'More', 'Latvian', 'Kazakh', 'Haitian', 'Tajik', 'Khmer', 'Wolof', 'Catalan', 'Mongolian', 'Thai', 'Afrikaans', 'Telugu', 'Marathi', 'Kirghiz', 'Macedonian', 'Chinese', 'Tagalog', 'Tibetan', 'Lithuanian', 'Punjabi', 'Frisian', 'Maya', 'Basque', 'Malay', 'Inuktitut', 'Kabuverdianu', 'Kurdish', 'Nepali', 'Dari', 'Dzongkha', 'Zulu', 'Luxembourgish', 'Guarani', 'Tarahumara', 'Flemish', 'Maltese', 'Kinyarwanda', 'Gujarati', 'Tigrigna', 'Filipino', 'Pushto', 'Azerbaijani', 'Swahili', 'Samoan', 'Pular', 'Lao', 'Amharic', 'Aromanian', 'Maori', 'Burmese', 'Gallegan', 'Welsh', 'Aboriginal', 'Assamese', 'Rhaetian', 'Yakut', 'Aymara', 'Neapolitan']
+    # input_genre = ['Drama', 'Western', 'Comedy', 'Horror', 'Mystery', 'Fantasy', 'Adventure', 'Romance', 'Sci-Fi', 'Crime', 'Musical', 'Thriller', 'Music', 'Biography', 'Action', 'History', 'War', 'Family', 'Animation', 'Sport']
+    # input_country= ['USA', 'Italy', 'Germany', 'Denmark', 'France', 'Belgium', 'Hungary', 'Russia', 'Mexico', 'Sweden', 'Australia', 'Japan', 'UK', 'Austria', 'Spain', 'Czechoslovakia', 'India', 'Brazil', 'Portugal', 'Turkey', 'Netherlands', 'Finland', 'Norway', 'Poland', 'Switzerland', 'Argentina', 'Romania', 'Canada', 'China', 'Yugoslavia', 'Greece', 'Egypt', 'Israel', 'Ireland', 'Philippines', 'Cuba', 'Bulgaria', 'Lebanon', 'Bolivia', 'Chile', 'Iran', 'Croatia', 'Peru', 'Taiwan', 'Senegal', 'Syria', 'Jamaica', 'Algeria', 'Ethiopia', 'Venezuela', 'Mali', 'Indonesia', 'Vietnam', 'Iceland', 'Colombia', 'Tunisia', 'Gibraltar', 'Albania', 'Latvia', 'Ukraine', 'Kazakhstan', 'Estonia', 'Slovakia', 'Bangladesh', 'Georgia', 'Singapore', 'Slovenia', 'Thailand', 'Kuwait', 'Lithuania', 'Ecuador', 'Liechtenstein', 'Pakistan', 'Serbia', 'Uruguay', 'Moldova', 'Malta', 'Nepal', 'Malaysia', 'Armenia', 'Luxembourg', 'Bhutan', 'Iraq', 'Bahamas', 'Jordan', 'Morocco', 'Kosovo', 'Azerbaijan', 'Greenland', 'Palestine', 'Honduras', 'Uganda', 'Guatemala', 'Cyprus', 'Korea', 'Nigeria', 'Mongolia', 'Kyrgyzstan', 'Brunei', 'Panama', 'Yemen', 'Myanmar', 'Paraguay', 'Cambodia', 'Montenegro']
+    # input_lang = ['English', 'Italian', 'German', 'Danish', 'French', 'Hungarian', 'Russian', 'Spanish', 'Swedish', 'None', 'Japanese', 'Czech', 'Portuguese', 'Ukrainian', 'Turkish', 'Yiddish', 'Dutch', 'Finnish', 'Norwegian', 'Polish', 'Romanian', 'Hindi', 'Slovenian', 'Mandarin', 'Arabic', 'Serbo-Croatian', 'Bengali', 'Albanian', 'Greek', 'Croatian', 'Urdu', 'Hebrew', 'Sinhalese', 'Esperanto', 'Korean', 'Persian', 'Slovak', 'Estonian', 'Bulgarian', 'Georgian', 'Cantonese', 'Latin', 'Kannada', 'Armenian', 'Bambara', 'Indonesian', 'Vietnamese', 'Irish', 'Malayalam', 'Icelandic', 'Serbian', 'Tamil', 'Saami', 'Bosnian', 'More', 'Latvian', 'Kazakh', 'Haitian', 'Tajik', 'Khmer', 'Wolof', 'Catalan', 'Mongolian', 'Thai', 'Afrikaans', 'Telugu', 'Marathi', 'Kirghiz', 'Macedonian', 'Chinese', 'Tagalog', 'Tibetan', 'Lithuanian', 'Punjabi', 'Frisian', 'Maya', 'Basque', 'Malay', 'Inuktitut', 'Kabuverdianu', 'Kurdish', 'Nepali', 'Dari', 'Dzongkha', 'Zulu', 'Luxembourgish', 'Guarani', 'Tarahumara', 'Flemish', 'Maltese', 'Kinyarwanda', 'Gujarati', 'Tigrigna', 'Filipino', 'Pushto', 'Azerbaijani', 'Swahili', 'Samoan', 'Pular', 'Lao', 'Amharic', 'Aromanian', 'Maori', 'Burmese', 'Gallegan', 'Welsh', 'Aboriginal', 'Assamese', 'Rhaetian', 'Yakut', 'Aymara', 'Neapolitan']
     
-    text = request.form['text']
-    gens=request.form.getlist('gens')
-    count = request.form.getlist('count')
-    lange = request.form.getlist('lange')
-    rating = request.form['rating']
-    yeargte = request.form['yeargte']
-    yearlte = request.form['yearlte']
+    # text = request.form['text']
+    # gens=request.form.getlist('gens')
+    # count = request.form.getlist('count')
+    # lange = request.form.getlist('lange')
+    # rating = request.form['rating']
+    # yeargte = request.form['yeargte']
+    # yearlte = request.form['yearlte']
     
-    genres = ''
-    for genre in gens:
-        genres += genre +','
+    # genres = ''
+    # for genre in gens:
+    #     genres += genre +','
 
-    countries = ''
-    for country in count:
-        countries += country +','
+    # countries = ''
+    # for country in count:
+    #     countries += country +','
 
-    languages = ''
-    for language in lange:
-        languages += language +','
+    # languages = ''
+    # for language in lange:
+    #     languages += language +','
 
-    url_api = 'https://imdbrecommender.azurewebsites.net/search/?text=' + text+'&genre='+genres+'&country='+countries+'&language='+languages+'&avg_vote='+rating+'&yeargte='+yeargte+'&yearlte='+yearlte+'\''
-    r = requests.get(url_api) 
-    query_results = json.loads(r.text)['hits']
-    return render_template("results.html", q_exact=query_results, texts=text, genres=input_genre, countries=input_country, langs=input_lang)
+    # url_api = 'https://imdbrecommender.azurewebsites.net/search/?text=' + text+'&genre='+genres+'&country='+countries+'&language='+languages+'&avg_vote='+rating+'&yeargte='+yeargte+'&yearlte='+yearlte+'\''
+    # r = requests.get(url_api) 
+    # query_results = json.loads(r.text)['hits']
+    # return render_template("results.html", q_exact=query_results, texts=text, genres=input_genre, countries=input_country, langs=input_lang)
+    return "results"
 
 @app.route('/search/', methods=['GET','POST'])
 def search():
-    text = request.args.get('text', '')
-    yeargte = request.args.get('yeargte', '')
-    yearlte = request.args.get('yearlte', 2020)
-    avg_vote = request.args.get('avg_vote', '')
-    genre = request.args.get('genre', '')
-    country = request.args.get('country', '')
-    language = request.args.get('language', '')
+    input_genre = ['Drama', 'Western', 'Comedy', 'Horror', 'Mystery', 'Fantasy', 'Adventure', 'Romance', 'Sci-Fi', 'Crime', 'Musical', 'Thriller', 'Music', 'Biography', 'Action', 'History', 'War', 'Family', 'Animation', 'Sport']
+    input_country= ['USA', 'Italy', 'Germany', 'Denmark', 'France', 'Belgium', 'Hungary', 'Russia', 'Mexico', 'Sweden', 'Australia', 'Japan', 'UK', 'Austria', 'Spain', 'Czechoslovakia', 'India', 'Brazil', 'Portugal', 'Turkey', 'Netherlands', 'Finland', 'Norway', 'Poland', 'Switzerland', 'Argentina', 'Romania', 'Canada', 'China', 'Yugoslavia', 'Greece', 'Egypt', 'Israel', 'Ireland', 'Philippines', 'Cuba', 'Bulgaria', 'Lebanon', 'Bolivia', 'Chile', 'Iran', 'Croatia', 'Peru', 'Taiwan', 'Senegal', 'Syria', 'Jamaica', 'Algeria', 'Ethiopia', 'Venezuela', 'Mali', 'Indonesia', 'Vietnam', 'Iceland', 'Colombia', 'Tunisia', 'Gibraltar', 'Albania', 'Latvia', 'Ukraine', 'Kazakhstan', 'Estonia', 'Slovakia', 'Bangladesh', 'Georgia', 'Singapore', 'Slovenia', 'Thailand', 'Kuwait', 'Lithuania', 'Ecuador', 'Liechtenstein', 'Pakistan', 'Serbia', 'Uruguay', 'Moldova', 'Malta', 'Nepal', 'Malaysia', 'Armenia', 'Luxembourg', 'Bhutan', 'Iraq', 'Bahamas', 'Jordan', 'Morocco', 'Kosovo', 'Azerbaijan', 'Greenland', 'Palestine', 'Honduras', 'Uganda', 'Guatemala', 'Cyprus', 'Korea', 'Nigeria', 'Mongolia', 'Kyrgyzstan', 'Brunei', 'Panama', 'Yemen', 'Myanmar', 'Paraguay', 'Cambodia', 'Montenegro']
+    input_lang = ['English', 'Italian', 'German', 'Danish', 'French', 'Hungarian', 'Russian', 'Spanish', 'Swedish', 'None', 'Japanese', 'Czech', 'Portuguese', 'Ukrainian', 'Turkish', 'Yiddish', 'Dutch', 'Finnish', 'Norwegian', 'Polish', 'Romanian', 'Hindi', 'Slovenian', 'Mandarin', 'Arabic', 'Serbo-Croatian', 'Bengali', 'Albanian', 'Greek', 'Croatian', 'Urdu', 'Hebrew', 'Sinhalese', 'Esperanto', 'Korean', 'Persian', 'Slovak', 'Estonian', 'Bulgarian', 'Georgian', 'Cantonese', 'Latin', 'Kannada', 'Armenian', 'Bambara', 'Indonesian', 'Vietnamese', 'Irish', 'Malayalam', 'Icelandic', 'Serbian', 'Tamil', 'Saami', 'Bosnian', 'More', 'Latvian', 'Kazakh', 'Haitian', 'Tajik', 'Khmer', 'Wolof', 'Catalan', 'Mongolian', 'Thai', 'Afrikaans', 'Telugu', 'Marathi', 'Kirghiz', 'Macedonian', 'Chinese', 'Tagalog', 'Tibetan', 'Lithuanian', 'Punjabi', 'Frisian', 'Maya', 'Basque', 'Malay', 'Inuktitut', 'Kabuverdianu', 'Kurdish', 'Nepali', 'Dari', 'Dzongkha', 'Zulu', 'Luxembourgish', 'Guarani', 'Tarahumara', 'Flemish', 'Maltese', 'Kinyarwanda', 'Gujarati', 'Tigrigna', 'Filipino', 'Pushto', 'Azerbaijani', 'Swahili', 'Samoan', 'Pular', 'Lao', 'Amharic', 'Aromanian', 'Maori', 'Burmese', 'Gallegan', 'Welsh', 'Aboriginal', 'Assamese', 'Rhaetian', 'Yakut', 'Aymara', 'Neapolitan']
 
-
+    text = request.form['text']
+    genre=request.form.getlist('gens')
+    country = request.form.getlist('count')
+    language = request.form.getlist('lange')
+    avg_vote = request.form['avg_vote']
+    yeargte = request.form['yeargte']
+    yearlte = request.form['yearlte']
 
     query = {
     "from" : 0, "size" : 30,
@@ -131,7 +134,8 @@ def search():
             print("%(avg_vote)s: %(original_title)s (%(year)s)" % hit["_source"])
     except:
         res = es.search(index="faf42_movies1",body=query)
-    return res
+
+    return render_template("results.html", q_exact=res['hits'], texts=text, genres=input_genre, countries=input_country, langs=input_lang)
 
 if __name__ == '__main__':
     app.run(debug=True)
