@@ -61,4 +61,15 @@
     navbarCollapse();
     // Collapse the navbar when page is scrolled
     $(window).scroll(navbarCollapse);
+
+
+    //paginate
+    $('#table_exact').dataTable({
+        "order": [],
+        "bPaginate": true,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bInfo": false,
+        "bAutoWidth": false });
+
 })(jQuery); // End of use strict

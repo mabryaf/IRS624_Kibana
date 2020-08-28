@@ -40,6 +40,7 @@ def result():
     input_lang = ['English', 'Italian', 'German', 'Danish', 'French', 'Hungarian', 'Russian', 'Spanish', 'Swedish', 'None', 'Japanese', 'Czech', 'Portuguese', 'Ukrainian', 'Turkish', 'Yiddish', 'Dutch', 'Finnish', 'Norwegian', 'Polish', 'Romanian', 'Hindi', 'Slovenian', 'Mandarin', 'Arabic', 'Serbo-Croatian', 'Bengali', 'Albanian', 'Greek', 'Croatian', 'Urdu', 'Hebrew', 'Sinhalese', 'Esperanto', 'Korean', 'Persian', 'Slovak', 'Estonian', 'Bulgarian', 'Georgian', 'Cantonese', 'Latin', 'Kannada', 'Armenian', 'Bambara', 'Indonesian', 'Vietnamese', 'Irish', 'Malayalam', 'Icelandic', 'Serbian', 'Tamil', 'Saami', 'Bosnian', 'More', 'Latvian', 'Kazakh', 'Haitian', 'Tajik', 'Khmer', 'Wolof', 'Catalan', 'Mongolian', 'Thai', 'Afrikaans', 'Telugu', 'Marathi', 'Kirghiz', 'Macedonian', 'Chinese', 'Tagalog', 'Tibetan', 'Lithuanian', 'Punjabi', 'Frisian', 'Maya', 'Basque', 'Malay', 'Inuktitut', 'Kabuverdianu', 'Kurdish', 'Nepali', 'Dari', 'Dzongkha', 'Zulu', 'Luxembourgish', 'Guarani', 'Tarahumara', 'Flemish', 'Maltese', 'Kinyarwanda', 'Gujarati', 'Tigrigna', 'Filipino', 'Pushto', 'Azerbaijani', 'Swahili', 'Samoan', 'Pular', 'Lao', 'Amharic', 'Aromanian', 'Maori', 'Burmese', 'Gallegan', 'Welsh', 'Aboriginal', 'Assamese', 'Rhaetian', 'Yakut', 'Aymara', 'Neapolitan']
 
     text = request.form['text']
+    search = text
     genre=request.form.getlist('gens')
     country = request.form.getlist('count')
     language = request.form.getlist('lange')
@@ -102,7 +103,7 @@ def result():
     except:
         res = es.search(index="faf42_movies1",body=query)
 
-    return render_template("results.html", q_exact=res['hits'], texts=text, genres=input_genre, countries=input_country, langs=input_lang)
+    return render_template("results.html", q_exact=res['hits'], texts=search, genres=input_genre, countries=input_country, langs=input_lang)
 
 if __name__ == '__main__':
     app.run(debug=True)
