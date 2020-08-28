@@ -48,6 +48,9 @@ def result():
     yeargte = request.form['yeargte']
     yearlte = request.form['yearlte']
 
+    if not yearlte:
+        yearlte = 2020
+
     query = {
     "from" : 0, "size" : 30,
     "query": {
@@ -55,7 +58,7 @@ def result():
             "should": [],
             "filter": [{
                 "bool": {
-                    "must": []
+                    "must": [   ]
                 }
             }
             ]
@@ -83,13 +86,13 @@ def result():
         avg_vote = {"range": { "avg_vote": { "gte": avg_vote }}}
         query["query"]["bool"]["filter"].append(avg_vote)
     if genre:
-        genre = {"match": {"genre": {"query": genre}}}
+        genre = {"match": {"genre": {"query": " ".join(genre)}}}
         query["query"]["bool"]["filter"][0]["bool"]["must"].append(genre)
     if country:
-        country = {"match": {"country": {"query": country}}}
+        country = {"match": {"country": {"query": " ".join(country)}}}
         query["query"]["bool"]["filter"][0]["bool"]["must"].append(country)
     if language:
-        language = {"match": {"language": {"query": language}}}
+        language = {"match": {"language": {"query": " ".join(language)}}}
         query["query"]["bool"]["filter"][0]["bool"]["must"].append(language)
 
     print(query)
