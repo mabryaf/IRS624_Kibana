@@ -2,8 +2,7 @@ from flask import Flask, jsonify, request, render_template, url_for
 from elasticsearch import Elasticsearch
 from elasticsearch.connection import create_ssl_context
 import ssl
-import requests
-import json
+
 
 # from datetime import datetime
 # from bson.json_util import dumps
