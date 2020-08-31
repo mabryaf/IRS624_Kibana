@@ -3021,10 +3021,10 @@ fieldset:disabled a.btn {
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.25rem 0.5rem;
+  padding: 0.15rem 0.4rem;
   font-size: 0.875rem;
-  line-height: 1.5;
-  border-radius: 0.2rem;
+  line-height: 1;
+  border-radius: 0.1rem;
 }
 
 .btn-block {
@@ -10415,4 +10415,14 @@ body {
   border-radius: 50%;
   background: #64a19d;
   cursor: pointer;
+}
+
+.accordion .card-header:after {
+  font-family: 'FontAwesome';  
+  content: "\f068";
+  float: right; 
+}
+.accordion .card-header.collapsed:after {
+  /* symbol for "collapsed" panels */
+  content: "\f067"; 
 }

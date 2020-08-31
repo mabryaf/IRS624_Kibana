@@ -19,7 +19,7 @@
             </div>
         </nav>
         <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-            <div class="col-8"><br/>
+            <div class="col-8" id="accordion"><br/>
                 {% if(not q_exact['hits']) %}
                 
                     <div class="container d-flex h-100 align-items-center">
@@ -40,8 +40,18 @@
                         <div class="card-body">
                             <p class="card-text text-justify">{{data["_source"]["description"]}}</p> 
                             <p class="card-text text-primary"><i class="fas fa-star "></i><strong>{{data["_source"]["avg_vote"]}}</strong>/10</p>
-                            <p class="card-text"><strong>Director: </strong>{{data["_source"]["director"]}}</p>
-                            <p class="card-text"><strong>Actors: </strong>{{data["_source"]["actors"]}}</p>
+                            <p class="card-text"><strong>Genre: </strong>{{data["_source"]["genre"]}} <strong>Duration: </strong>{{data["_source"]["duration"]}}</p>
+                            
+                            
+                            <a class="btn btn-sm btn-link text-primary" data-toggle="collapse" data-target="#{{data['_source']['imdb_title_id']}}" aria-expanded="true" aria-controls="{{data['_source']['imdb_title_id']}}">
+                                More info..
+                            </a>
+                            <div id="{{data['_source']['imdb_title_id']}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <p class="card-text"><strong>Country: </strong>{{data["_source"]["country"]}} <strong>Language: </strong>{{data["_source"]["language"]}}</p>
+                                <p class="card-text"><strong>Director: </strong>{{data["_source"]["director"]}}</p>
+                                <p class="card-text"><strong>Actors: </strong>{{data["_source"]["actors"]}}</p>
+
+                            </div>
                         </div>
 
                     </div><br/>

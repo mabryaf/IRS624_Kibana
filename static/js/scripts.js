@@ -72,4 +72,13 @@
         "bInfo": false,
         "bAutoWidth": false });
 
+    $('[data-toggle="collapse"]').click(function() {
+        $(this).toggleClass( "active" );
+        if ($(this).hasClass("active")) {
+            $(this).text("Less info..");
+        } else {
+            $(this).text("More info..");
+        }
+        });   
+
 })(jQuery); // End of use strict
