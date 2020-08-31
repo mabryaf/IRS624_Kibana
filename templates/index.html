@@ -2,17 +2,19 @@
 {% block content %}
 
     <section class="signup-section" id="lookup">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-10 col-lg-8 mx-auto text-center">
                     <i class="fas fa-film fa-2x mb-2 text-white"></i>
                     <h2 class="text-white mb-5">IMDb Search</h2>
-                    <form class="form-inline d-flex" method="POST" action="../result/">
+                    <form class="form-inline d-flex" method="POST" action="">
                         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#searchModal">
                             <i class="fas fa-filter"></i>
                         </button>
                         <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="text"name="text" placeholder="Movie Title, People, Genre" /> 
-                        <button class="btn btn-primary mx-auto" type="submit">Search</button>
+                        <button class="btn btn-primary mr-0 mr-sm-2 mb-3 mb-sm-0" type="submit" name="action" value="../result/">Search</button>
+                        <button class="btn btn-info mr-0 mr-sm-2 mb-3 mb-sm-0" type="submit" name="action" value="../random/">Suprise Me!</button>
+                    
                         <div class="modal fade bd-example-modal-lg" id="searchModal">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -87,6 +89,7 @@
                             </div>
                         </div>
                     </form>
+                
                 </div>
             </div>
         </div>
