@@ -29,7 +29,7 @@
 - ~~Third Use Case: The user will be capable of sorting the results~~
 
 # How: Describe related decisions you have made and steps you have taken to build the Engine
-Steps:
+## Steps:
 1. Obtain dataset from Kaggle.
 2. Preprocess the data to retain attributes of interest and remove rows with missing details.
 3. Setup free trial account in Kibana.
@@ -266,3 +266,8 @@ GET /_search
 
 # 1.2 Code and Interface (if applicable)
 - Simply visit the site: https://imdbsearchengine.herokuapp.com/, input the search query and filters, and press search.
+
+# References
+- https://www.elastic.co/guide/en/elasticsearch/reference/master/search-analyzer.html
+- https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-similarity.html
+- https://rebeccabilbro.github.io/intro-doc-similarity-with-elasticsearch/
