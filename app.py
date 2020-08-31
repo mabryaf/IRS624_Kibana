@@ -47,6 +47,7 @@ def result():
     avg_vote = request.form['avg_vote']
     yeargte = request.form['yeargte']
     yearlte = request.form['yearlte']
+    random = request.form['random']
 
     if not yearlte:
         yearlte = 2020
@@ -79,6 +80,14 @@ def result():
               { "match": { "description": {"query": text, "boost": 1 }}}
               ]
         query["query"]["bool"]["should"].extend(text)
+    if random:
+        random_query =  {
+          "function_score": {
+            "query": { "match_all": {} },
+            "random_score": {}
+          }
+        }
+        query["query"]["bool"]["should"].extend(random_query)
     if yeargte:
         year = {"range": { "year": { "gte": yeargte, "lte": yearlte}}}
         query["query"]["bool"]["filter"].append(year)
