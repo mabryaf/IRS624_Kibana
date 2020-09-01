@@ -40,7 +40,7 @@
                         <div class="card-body">
                             <p class="card-text text-justify">{{data["_source"]["description"]}}</p> 
                             <p class="card-text text-primary"><i class="fas fa-star "></i><strong>{{data["_source"]["avg_vote"]}}</strong>/10</p>
-                            <p class="card-text"><strong>Genre: </strong>{{data["_source"]["genre"]}} <strong>Duration: </strong>{{data["_source"]["duration"]}}</p>
+                            <p class="card-text"><strong>Genre: </strong>{{data["_source"]["genre"]}} <strong>Duration: </strong>{{data["_source"]["duration"]}}m</p>
                             
                             
                             <a class="btn btn-sm btn-link text-primary" data-toggle="collapse" data-target="#{{data['_source']['imdb_title_id']}}" aria-expanded="true" aria-controls="{{data['_source']['imdb_title_id']}}">
