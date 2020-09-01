@@ -268,6 +268,22 @@ GET /_search
 ## 2. Examine the results and judge each document’s relevance in terms of the information need.
 ## 3. Provide a formal evaluation in terms of metrics such as precision, recall, F1,and/or nDCG.
 ## 4. Discuss the results. You are encouraged to try different settings and compare their results.
+| Query | Type | DCG | nDCG | Recall | 
+|-------|------|-----|------|--------|
+|  "Avengers"     |  Title - generic    | 5.2531254248668064 | 0.8954792535685231 | 0.6 |
+|   "Avengers Age of Ultron"    |  Title - specific    | 2 | 1.0 | 1 |
+|     "Avengers" - 2018 |   Title - filtered   |   5.123212623289701 | 1.0 | 1 |
+|     "Michael"  |   Director - generic   | 2.5616063116448506 | 1.0 | 0 |
+|     "Michael Bay" - action  |   Director - filtered   |  5.735283409071832 | 0.788246835854919 | 0.7 |
+|     "Anthony Hopkins"  |   Actor - specific   | 3.261859507142915 | 1.0 | 0.2 ||
+|     "French Comedy"  |   Genre - specific   | 4.253327913222679 | 0.9287981500785571 | 1 |
+|     "Surprise Me!" - French - Comedy |   filtered   |9.087118676176692 | 1.0 | 1 |
+|     "Surprise Me!" - pre-2000 - Western - American |   filtered   |   9.087118676176692 | 1.0 | 1 |
+
+From these overall results, we can generalize that if a user wants to search for a specific movie, it's best practice to type the whole movie title to retrieve the specific movie as in the example of 'Avengers Age of Ultron'. Generally, more spicific search queries result to higher recall as more relevant results are retrieved.
+If a user wishes to get recommendations with filters applied, hitting "Surprise Me" button is a fun was to get recommendations. Precision is not calculated because it needs false negatives. it would be impossible to know which movies were not retrieved since there are millions of titles in the database. Recall is restricted to the top 10 results. In this application. Recall is the amount of relevant movies in the top 10. But for some applications where we expect a certain amount (ex. 1 specific movie title), recall is 1, as long as the movie is shown in the top spot. 
+(For in depth discussion on each query and result, refer to the notebook file: INFO624-Evaluations.ipynb) 
+
 
 # Where: Where is your search engine (index)? Provide the names of your indices. 
 - The search engine index is located in a free trial account in Kibana Elastic Search. The indices are named faf42_movies1, faf42_movies2, faf42_movies3_, faf42_movies4, faf42_movies5, faf42_movies6, and faf42_movies7_. 
