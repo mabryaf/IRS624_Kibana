@@ -24,7 +24,7 @@ scheme="https",
 port=9243,
 ssl_context = context,
 )
-#gumana ka plls
+
 @app.route("/")
 def home():
     genre = ['Drama', 'Western', 'Comedy', 'Horror', 'Mystery', 'Fantasy', 'Adventure', 'Romance', 'Sci-Fi', 'Crime', 'Musical', 'Thriller', 'Music', 'Biography', 'Action', 'History', 'War', 'Family', 'Animation', 'Sport']
