@@ -25,8 +25,8 @@
 # Who: Explain whom your search engines may serve and their basic information needs. Ideally You should be able to describe three use cases (information needs).
 - The search engine is for people who want a quicker or straightforward way of getting the list of movies that is related to their query. It does not boast a very excellent UI that other sites have, but that is exactly why it is better for people who just want the titles and information about it much quicker. There is no need to click other buttons or navigate to other pages to get more information about the movie. Moreover, unlike websites like Netflix, the titles in the search engine cater to a more broad audience who may want something that is from the early 1900s, but it is fully equipped with the latest titles from 2018 as well.
 - First Use Case: The user will be capable of entering a query and they will receive a list of movies with the highest similarity to the query.
-- Second Use Case: The user will be capable of adding filters to the query and movies matching the filter will be removed from the list~~
-- ~~Third Use Case: The user will be capable of sorting the results~~
+- Second Use Case: The user will be capable of adding filters to the query and movies matching the filter will be removed from the list
+- Third Use Case: The user will be capable of receiving a random list of films
 
 # How: Describe related decisions you have made and steps you have taken to build the Engine
 ## Steps:
@@ -134,8 +134,8 @@ PUT /_mapping
 ```
 
 ## 2. Describe your search queries in terms the use cases (needs):
-### What keywords and query structure should be used?
-#### Use Case 1: Query
+### Use Case 1: Query
+For the first use case, the user simply needs to input a query in the search bar and they will receive the top 30 films which matches the query. The score would then be calculated based on the fields: original_title, actors, director, genre, country, language, writer, production_company, description. Each field comes with a specific boost or multiplier based on importance. The structure uses bool with should as it tries to match the query for all fields, but it is not required to match all of them. However, more matches and matches on the boosted fields would provide a higher score.
 ```
 GET /_search
 {
@@ -156,7 +156,9 @@ GET /_search
         }
     }
 ```
-#### Use Case 2: Filters
+### Use Case 2: Filters
+#### Filter Only
+For the second use case, the user simply needs to input the filters and they will receive 30 films which have the specifications entered. The structure uses bool with filter so that the score will not be affected if the user decides to use the filter functionality along with the query matching. Filtering simply removes the films which do not have the specifications inputted by the user and this is done with the use of the 'must'. The fields that can be filtered are genre, language, country, year, and avg_vote.
 ```
 GET /_search
 {
@@ -166,7 +168,7 @@ GET /_search
                 {"bool": {"must": [
                 {"match": {"genre": {"query": "Action, Drama"}}},
                 {"match": {"language": {"query": "English"}}},
-                {"match": {"country": {"query": "US"}}}
+                {"match": {"country": {"query": "USA"}}}
                 ]
                 }},
                 {"range": { "year": { "gte": 2000, "lte": 2020}}},
@@ -176,27 +178,7 @@ GET /_search
         }
     }
 ```
-#### ~~Use Case 3:Sort~~
-```
-GET /_search
-{
-    "query": {
-        "bool": {
-            "filter": [
-                {"bool": {"must": [
-                {"match": {"genre": {"query": "Action, Drama"}}},
-                {"match": {"language": {"query": "English"}}},
-                {"match": {"country": {"query": "US"}}}
-                ]
-                }},
-                {"range": { "year": { "gte": 2000, "lte": 2020}}},
-                {"range": { "avg_vote": { "gte": 7 }}}
-                ]
-            }
-        }
-    }
-```
-#### Combined Use Cases
+#### Query with Filter
 ```
 GET /_search
 {
@@ -217,7 +199,7 @@ GET /_search
                 {"bool": {"must": [
                 {"match": {"genre": {"query": "Action, Drama"}}},
                 {"match": {"language": {"query": "English"}}},
-                {"match": {"country": {"query": "US"}}}
+                {"match": {"country": {"query": "USA"}}}
                 ]
                 }},
                 {"range": { "year": { "gte": 2000, "lte": 2020}}},
@@ -227,18 +209,54 @@ GET /_search
         }
     }
 ```
-### What fields should be searched for potential matches?
-#### Use Case 1: Query
-- original_title, actors, director, genre, country, language, writer, production_company, description
-#### Use Case 2: Filters
-- genre, language, country, year, avg_vote
-#### ~~Use Case 3:Sort~~
-### What fields should be included in the scoring (ranking)? In what manner?
-#### Use Case 1: Query
-- original_title, actors, director, genre, country, language, writer, production_company, description
-#### Use Case 2: Filters
-- None
-#### ~~Use Case 3:Sort~~
+### Use Case 3:Random List
+For the third use case, the user simply needs to click the 'Surprise Me' button and they will receive a list of random films. The structure replaces the match from use case 1 for easier modifications in the backend code. However, it could simply be query and then immediately the function_score. Match_all gives all documents with a score of 1, and the random_score gives it a multiplier. Through this, the films are given a score between 0-1, and they are returned in decreasing order based on the score. This can also be used along with the filtering functionality. This use case is for users who do not have a specific film in mind, but would like to find out something new.
+#### Random List
+```
+GET /_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "function_score": {
+            "query": { "match_all": {} },
+            "random_score": {}
+          }
+        }
+        ]
+    }
+  }
+}
+```
+#### Random List with Filters
+```
+GET /_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "function_score": {
+            "query": { "match_all": {} },
+            "random_score": {}
+          }
+        }
+        ],
+        "filter": [
+                {"bool": {"must": [
+                {"match": {"genre": {"query": "Action"}}},
+                {"match": {"language": {"query": "English"}}},
+                {"match": {"country": {"query": "USA"}}}
+                ]
+                }},
+                {"range": { "year": { "gte": 2000, "lte": 2020}}},
+                {"range": { "avg_vote": { "gte": 7 }}}
+                ]
+            }
+        }
+    }
+```
 
 ## 3. Select related similarity, scoring, and boosting methods accordingly. Describe them and provide your reasons.
 - ~~The similarity scoring used is BM25, which is a similar way of scoring with TF-IDF.~~ Specific fields have their scores boosted because the researchers decided that certain fields are more important than others. The main focus were the title, actors, director, and genre, which were boosted by 4, 3, 3, and 2, respectively. As fellow users of film search engines, this is also true for the researchers when they try to search for films to watch. Also, popular streaming websites, like Netflix, would explicitly show 'Titles,people,genre' as help text in their search bar. However, scores are also calculated based on the similarity to the country, language, writer, production_company, and description fields, but with no boosting involved. 
@@ -255,11 +273,13 @@ GET /_search
 - The search engine index is located in a free trial account in Kibana Elastic Search. The indices are named faf42_movies1, faf42_movies2, faf42_movies3_, faf42_movies4, faf42_movies5, faf42_movies6, and faf42_movies7_. 
 
 # Experiences: Discuss your team experiences working on the search engine. What works? What doesn’t? What could have been done better? What have you learned as a team? And your thoughts on future works?
-- Indices seemed to have a limit of 10,000 lines and the researchers had to create 7 indices to accommodate the entirety of the dataset.
-- Filters have no effect on scoring.
-- Mapping and settings could not be modified once initialized. New index has to be created to initialize new mapping and settings.
-- Deployment on azure did not work and the researchers had to deploy in heroku.
-- Design has to be simple yet elegant.
+- Challenges:
+    - Indices seemed to have a limit of 10,000 lines and the researchers had to create 7 indices to accommodate the entirety of the dataset.
+    - Mapping and settings could not be modified once initialized. New index has to be created to initialize new mapping and settings.
+    - Deployment on azure did not work and the researchers had to deploy in heroku.
+    - Design has to be simple yet elegant.
+- Lessons:
+    - Filters have no effect on scoring.
 - Future work:
     - Recommended titles could be added once a specific title is clicked.
     - Boosting and query can be further enhanced for better results.
@@ -270,4 +290,8 @@ GET /_search
 # References
 - https://www.elastic.co/guide/en/elasticsearch/reference/master/search-analyzer.html
 - https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-similarity.html
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-all-query.html
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html
+- https://https://www.imdb.com/
 - https://rebeccabilbro.github.io/intro-doc-similarity-with-elasticsearch/
